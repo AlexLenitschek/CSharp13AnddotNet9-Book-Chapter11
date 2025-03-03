@@ -75,4 +75,63 @@
         // Return true if the name is longer than four characters.
         return name.Length > 4;
     }
+
+    #region Working with bags and sets
+    static void Output(IEnumerable<string> cohort, string description = "")
+    { 
+        if (!string.IsNullOrEmpty(description))
+        {
+            WriteLine(description);
+        }
+        Write(" ");
+        WriteLine(string.Join(", ", cohort.ToArray()));
+        WriteLine();
+    }
+
+    static void WorkingWithSets()
+    {
+        string[] cohort1 = { "Racherl", "Gareth", "Jonathan", "George" };
+        string[] cohort2 = { "Jack", "Stephen", "Daniel", "Jack", "Jared" };
+        string[] cohort3 = { "Declan", "Jack", "Jack", "Jasmine", "Conor" };
+
+        SectionTitle("The cohorts");
+
+        Output(cohort1, "Cohort 1");
+        Output(cohort2, "Cohort 2");
+        Output(cohort3, "Cohort 3");
+
+        SectionTitle("Set operations");
+
+        Output(cohort2.Distinct(), "cohort2.Distinct()");
+        Output(cohort2.DistinctBy(name => name.Substring(0, 2)), "cohort2.DistinctBy(name => name.Substring(0, 2))");
+        Output(cohort2.Union(cohort3), "cohort2.Union(cohort3)");
+        Output(cohort2.Concat(cohort3), "cohort2.Concat(cohort3)");
+        Output(cohort2.Intersect(cohort3), "cohort2.Intersect(cohort3)");
+        Output(cohort2.Except(cohort3), "cohort2.Except(cohort3)");
+        Output(cohort1.Zip(cohort2, (c1, c2) => $"{c1} matched with {c2}"), "cohort1.Zip(cohort2)");
+    }
+    #endregion
+
+    #region Getting the Index as well as items
+    static void WorkingWithIndices()
+    {
+        string[] theSeven = { "Homelander", "Black Noir", "The Deep", "A-Train", "Queen Mave", "Starlight", "Stormfront" };
+
+        SectionTitle("Working with indices (old)");
+
+        foreach (var (item, index) in theSeven.Select((item, index) => (item, index))) // In the Select method you need to specify item first and then index.
+        {
+            WriteLine($"{index}: {item}");
+        }
+
+        SectionTitle("Working with indices (new)");
+
+        foreach (var (index, item) in theSeven.Index()) // In the Index method you need to specify index first and then item.
+        {
+            WriteLine($"{index}: {item}");
+        }
+    }
+
+
+    #endregion
 }
