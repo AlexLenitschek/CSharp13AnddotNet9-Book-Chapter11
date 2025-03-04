@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqWithObjects", "LinqWith
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqWithEFCore", "LinqWithEFCore\LinqWithEFCore.csproj", "{CC5C4424-9DF0-4576-9693-6D2B6E7C6D22}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exercise_LinqQueries", "Exercise_LinqQueries\Exercise_LinqQueries.csproj", "{137AA87A-5077-4486-981E-4902482282BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{CC5C4424-9DF0-4576-9693-6D2B6E7C6D22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC5C4424-9DF0-4576-9693-6D2B6E7C6D22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC5C4424-9DF0-4576-9693-6D2B6E7C6D22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{137AA87A-5077-4486-981E-4902482282BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{137AA87A-5077-4486-981E-4902482282BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{137AA87A-5077-4486-981E-4902482282BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{137AA87A-5077-4486-981E-4902482282BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
