@@ -4,7 +4,9 @@
 //GroupJoinCategoriesAndProducts();
 //ProductsLookup();
 //AggregateProducts();
-PagingProducts();
+//PagingProducts();
+//FilterAndSortWithOwnExtension(); // Same output as FilterAndSort(); because method doesn't modify the sequence.
+CustomExtensionMethods();
 
 
 #region Information on LINQ extensions and lambda expressions vs. query comprehension syntax

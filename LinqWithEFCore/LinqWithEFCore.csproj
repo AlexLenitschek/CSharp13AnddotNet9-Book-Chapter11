@@ -18,5 +18,9 @@
     <Using Include="System.Console" Static="true" />
   </ItemGroup>
   
+  <ItemGroup>
+  <ProjectReference Include="..\PacktLinqExtensions\PacktLinqExtensions.csproj" />
+  </ItemGroup>
+  
 
 </Project>

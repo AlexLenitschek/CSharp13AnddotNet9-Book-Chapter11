@@ -267,4 +267,85 @@ partial class Program
         }
     }
     #endregion
+
+    #region Using own extension method.
+    private static void FilterAndSortWithOwnExtension()
+    {
+        SectionTitle("Filter and Sort");
+
+        using NorthwindDb db = new();
+
+        DbSet<Product> allProducts = db.Products;
+
+
+        IQueryable<Product> processedProducts = allProducts.ProcessSequence();
+
+        IQueryable<Product> filteredProducts = processedProducts
+            .Where(product => product.UnitPrice < 10M);
+
+        IOrderedQueryable<Product> sortedAndFilteredProducts = filteredProducts
+            .OrderByDescending(product => product.UnitPrice);
+
+        WriteLine("Products that cost less than 10$:");
+
+        //WriteLine(sortedAndFilteredProducts.ToQueryString());
+        //foreach (Product p in sortedAndFilteredProducts)
+        //{
+        //    WriteLine("{0}: {1} costs {2:$#,##0.00}", p.ProductId, p.ProductName, p.UnitPrice);
+        //}
+
+        #region Projection using Select
+        var projectedProducts = sortedAndFilteredProducts
+            .Select(product => new
+            {
+                product.ProductId,
+                product.ProductName,
+                product.UnitPrice
+            });
+
+        WriteLine(projectedProducts.ToQueryString());
+        foreach (var p in projectedProducts)
+        {
+            WriteLine("{0}: {1} costs {2:$#,##0.00}", p.ProductId, p.ProductName, p.UnitPrice);
+        }
+        #endregion
+
+        WriteLine();
+    }
+
+    #endregion
+
+    #region Trying the mode and median methods
+    static void CustomExtensionMethods()
+    {
+        SectionTitle("Custom aggregate extension methods");
+
+        using (NorthwindDb db = new())
+        {
+            WriteLine("{0,-25} {1,10:N0}",
+              "Mean units in stock:",
+              db.Products.Average(p => p.UnitsInStock));
+
+            WriteLine("{0,-25} {1,10:$#,##0.00}",
+              "Mean unit price:",
+              db.Products.Average(p => p.UnitPrice));
+
+            WriteLine("{0,-25} {1,10:N0}",
+              "Median units in stock:",
+              db.Products.Median(p => p.UnitsInStock));
+
+            WriteLine("{0,-25} {1,10:$#,##0.00}",
+              "Median unit price:",
+              db.Products.Median(p => p.UnitPrice));
+
+            WriteLine("{0,-25} {1,10:N0}",
+              "Mode units in stock:",
+              db.Products.Mode(p => p.UnitsInStock));
+
+            WriteLine("{0,-25} {1,10:$#,##0.00}",
+              "Mode unit price:",
+              db.Products.Mode(p => p.UnitPrice));
+        }
+    }
+    #endregion
 }
