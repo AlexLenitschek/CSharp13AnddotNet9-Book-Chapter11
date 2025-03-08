@@ -1,5 +1,6 @@
 ﻿using Northwind.EntityModels; // To use NorthwindDb, Category and Product.
 using Microsoft.EntityFrameworkCore; // To use DbSet<T>.
+using System.Xml.Linq; // To use XElement, XAttribute.
 
 partial class Program
 {
@@ -345,6 +346,53 @@ partial class Program
             WriteLine("{0,-25} {1,10:$#,##0.00}",
               "Mode unit price:",
               db.Products.Mode(p => p.UnitPrice));
+        }
+    }
+    #endregion
+
+    #region Generating XML using LINQ to XML
+    static void OutputProductsAsXml()
+    {
+        SectionTitle("Output products as XML");
+
+        using (NorthwindDb db = new())
+        {
+            Product[] productsArray = db.Products.ToArray();
+
+            XElement xml = new(
+                name: "products", 
+                content:
+              from p in productsArray
+              select new XElement("product",
+                new XAttribute("id", p.ProductId),
+                new XAttribute("price", p.UnitPrice ?? 0),
+               new XElement("name", p.ProductName)));
+
+            WriteLine(xml.ToString());
+        }
+    }
+    #endregion
+
+    #region Reading XML using LIQN to XML
+    static void ProcessSettings()
+    {
+        string path = Path.Combine(
+          Environment.CurrentDirectory, "settings.xml");
+
+        WriteLine($"Settings file path: {path}");
+        XDocument doc = XDocument.Load(path);
+
+        var appSettings = doc.Descendants("appSettings")
+          .Descendants("add")
+          .Select(node => new
+          {
+              Key = node.Attribute("key")?.Value,
+              Value = node.Attribute("value")?.Value
+          }).ToArray();
+
+        foreach (var item in appSettings)
+        {
+            WriteLine($"{item.Key}: {item.Value}");
         }
     }
     #endregion
